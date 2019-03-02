@@ -7,15 +7,19 @@ Adafruit Arduino - Lesson 15. Bi-directional Motor */
 int state;
 int cont_state;
 
-int enablePin = 11;
+int enablePin1 = 11;
+int enablePin2 = 3;
 int in1Pin = 10;
 int in2Pin = 9;
+int in3Pin = 4;
+int in4Pin = 5;
 int potPin = 0;
 
 const int RECV_PIN = 7;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 
+boolean reverse; 
 
 void setup()
 {
@@ -50,6 +54,7 @@ void loop() {
       }
       break;
     case(FORWARD):
+      
       //Put code to go forward here
       if(remote_val == 0xFFFFFF && cont_val == FORWARD){
         //continue to go forward
@@ -71,9 +76,13 @@ void loop() {
       break;
   }
   int speed = analogRead(potPin) / 4; 
-  boolean reverse = digitalRead(switchPin); 
   setMotor(speed, reverse);
 }
 void setMotor(int speed, boolean reverse) {
-analogWrite(enablePin, speed); digitalWrite(in1Pin, ! reverse); digitalWrite(in2Pin, reverse);
+  analogWrite(enablePin1, speed);
+  analogWrite(enablePin2, speed);
+  digitalWrite(in1Pin, ! reverse);
+  digitalWrite(in2Pin, reverse);
+  digitalWrite(in3Pin, ! reverse);
+  digitalWrite(in4Pin, reverse);
 }
