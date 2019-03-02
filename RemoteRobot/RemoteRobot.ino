@@ -34,36 +34,39 @@ void loop() {
         int remote_val = results.value;
         Serial.println(results.value, HEX);
         irrecv.resume();
+  } else {
+    state = IDLE;
   }
+  
   switch(state){
     case(IDLE):
-      if(remote_val == ){
+      if(remote_val == 0xFFA857){
         state = FORWARD;
         cont_state = FORWARD;
       }
-      if(remote_val == ){
+      if(remote_val == 0xFFE01F){
         state = BACKWARD;
         cont_state = BACKWARD;
       }
       break;
     case(FORWARD):
-
-      if(cont_val == ){
-        
+      //Put code to go forward here
+      if(remote_val == 0xFFFFFF && cont_val == FORWARD){
+        //continue to go forward
       }
-      if(remote_val == ){
-        state = BACKWARD
-      }
-      if(remote_val == ){
-        state = IDLE;
+      if(remote_val == 0xFFE01F){
+        state = BACKWARD;
+        cont_state == BACKWARD;
       }
       break;
     case(BACKWARD):
-      if(remote_val == ){
-        state = FORWARD;
+      //Put code to go backward here
+      if(remote_val == 0xFFFFFF && cont_val == BACKWARD){
+        //continue to go backward
       }
-      if(remote_val == ){
-        state = IDLE;
+      if(remote_val == 0xFFA857){
+        state = FORWARD;
+        cont_state == FORWARD;
       }
       break;
   }
